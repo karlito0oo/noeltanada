@@ -1,7 +1,8 @@
 import React from "react";
 import HeroSection from "./components/HeroSection";
 import AboutNoel from "./components/AboutNoel";
-import FeaturedCollectionSection from "./FeaturedCollectionSection";
+import FeaturedCollectionSection from "./components/FeaturedCollectionSection";
+import OurStorySection from "./components/OurStorySection";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <HeroSection />
       <AboutNoel />
       <FeaturedCollectionSection />
+      <OurStorySection />
     </>
   );
 }
