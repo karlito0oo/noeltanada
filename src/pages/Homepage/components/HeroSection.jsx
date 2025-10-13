@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => (
   <div
@@ -40,18 +41,20 @@ const HeroSection = () => (
             </h1>
 
             {/* Shop button */}
-            <button
-              className="text-white px-8 py-4 text-lg font-medium uppercase tracking-wide transition-colors duration-300"
-              style={{ backgroundColor: "#7d6040" }}
-              onMouseOver={(e) =>
-                (e.currentTarget.style.backgroundColor = "#6a5236")
-              }
-              onMouseOut={(e) =>
-                (e.currentTarget.style.backgroundColor = "#7d6040")
-              }
-            >
-              SHOP
-            </button>
+            <Link to="/products">
+              <button
+                className="mt-5 text-white px-8 py-4 text-lg font-medium uppercase tracking-wide transition-colors duration-300"
+                style={{ backgroundColor: "#7d6040" }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#6a5236")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#7d6040")
+                }
+              >
+                SHOP
+              </button>
+            </Link>
           </div>
         </div>
       </main>

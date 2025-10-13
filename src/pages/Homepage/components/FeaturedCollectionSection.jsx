@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const FeaturedCollectionSection = () => (
   <section className="min-h-screen bg-[#f5f3f0] flex">
@@ -54,7 +55,16 @@ const FeaturedCollectionSection = () => (
                 key={item}
                 className="flex items-center justify-between py-2 border-b border-white/10"
               >
-                <span className="text-lg">{item}</span>
+                {item === "Products" ? (
+                  <Link 
+                    to="/products" 
+                    className="text-lg hover:text-white/80 transition-colors"
+                  >
+                    {item}
+                  </Link>
+                ) : (
+                  <span className="text-lg">{item}</span>
+                )}
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -104,12 +114,13 @@ const FeaturedCollectionSection = () => (
         <h1 className="text-4xl font-light text-gray-900">
           Featured Collection
         </h1>
-        <button
-          className="px-8 py-3 text-white font-medium uppercase tracking-wide hover:opacity-90 transition"
+        <Link
+          to="/products"
+          className="px-8 py-3 text-white font-medium uppercase tracking-wide hover:opacity-90 transition inline-block"
           style={{ backgroundColor: "#dd9d4c" }}
         >
           VIEW ALL PRODUCTS
-        </button>
+        </Link>
       </div>
 
       {/* Product Grid */}
