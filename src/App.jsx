@@ -1,8 +1,14 @@
 import React from "react";
-import HeroSection from "./HeroSection";
+import HeroSection from "./components/HeroSection";
+import AboutSection from "./AboutSection";
 
 function App() {
-  return <HeroSection />;
+  return (
+    <>
+      <HeroSection />
+      <AboutSection />
+    </>
+  );
 }
 
 export default App;
