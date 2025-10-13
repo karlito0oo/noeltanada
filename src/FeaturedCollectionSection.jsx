@@ -82,8 +82,8 @@ const FeaturedCollectionSection = () => (
 
       {/* Bottom Logo */}
       <div className="p-6 flex flex-col items-center">
-        <img src="/logo-full.png" alt="Noel Tanada" className="w-48 mb-2" />
-        <div className="text-center mt-2">
+        <img src="/logo-full.png" alt="Noel Tanada" className="w-48" />
+        <div className="text-center">
           <span className="tracking-[0.3em] text-sm text-white font-light">
             WHERE FURNITURE IS{" "}
           </span>
