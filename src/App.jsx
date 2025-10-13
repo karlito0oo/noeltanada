@@ -5,6 +5,7 @@ import FeaturedCollectionSection from "./components/FeaturedCollectionSection";
 import OurStorySection from "./components/OurStorySection";
 import FeaturedArticlesSection from "./components/FeaturedArticlesSection";
 import FeaturedVideosSection from "./components/FeaturedVideosSection";
+import FooterSection from "./components/FooterSection";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       <AboutNoel />
       <FeaturedCollectionSection />
       <OurStorySection />
-  <FeaturedArticlesSection />
-  <FeaturedVideosSection />
+      <FeaturedArticlesSection />
+      <FeaturedVideosSection />
+      <FooterSection />
     </>
   );
 }
