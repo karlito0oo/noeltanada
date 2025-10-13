@@ -1,12 +1,12 @@
 import React from "react";
 import HeroSection from "./components/HeroSection";
-import AboutSection from "./AboutSection";
+import AboutNoel from "./components/AboutNoel";
 
 function App() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
+      <AboutNoel />
     </>
   );
 }
