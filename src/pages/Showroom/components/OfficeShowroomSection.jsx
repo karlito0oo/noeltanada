@@ -2,27 +2,27 @@ import React from "react";
 
 const OfficeShowroomSection = () => {
   return (
-    <section className="bg-[#fcf8f5] py-16 px-4">
+    <section className="bg-[#fcf8f5] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="mb-16">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-8 text-gray-900 text-left">
+          <div className="mb-8 sm:mb-12 md:mb-16">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 md:mb-8 text-gray-900 text-center sm:text-left">
               Office & Showroom
             </h1>
           </div>
         </div>
         {/* Location and Contact Info */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 mb-8">
-            <div className="flex-shrink-0 flex items-center justify-center w-20 h-20">
+        <div className="max-w-4xl mx-auto mb-8 sm:mb-10 md:mb-12">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 md:gap-8 lg:gap-12 mb-6 sm:mb-8">
+            <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20">
               {/* Map Pin Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 48 48"
                 stroke="currentColor"
-                className="w-16 h-16 text-black"
+                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-black"
               >
                 <path
                   strokeLinecap="round"
@@ -40,26 +40,26 @@ const OfficeShowroomSection = () => {
                 />
               </svg>
             </div>
-            <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-serif font-semibold text-gray-900 mb-2">
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 mb-2 leading-tight">
                 17 Valencia Street, Susana Heights Village,
               </h2>
-              <p className="text-2xl md:text-3xl font-serif font-semibold text-gray-900">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 leading-tight">
                 Tunasan, Muntinlupa City
               </p>
             </div>
           </div>
 
           {/* Contact Numbers */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="flex items-center gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
+            <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-4 p-4 sm:p-0 bg-white sm:bg-transparent rounded-lg sm:rounded-none shadow-sm sm:shadow-none">
               {/* Mobile Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                className="w-8 h-8 text-black"
+                className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-black flex-shrink-0"
               >
                 <rect
                   x="6"
@@ -73,21 +73,23 @@ const OfficeShowroomSection = () => {
                 />
                 <circle cx="12" cy="18" r="1" fill="#000" />
               </svg>
-              <div>
-                <p className="text-lg font-semibold text-gray-900">
+              <div className="text-center sm:text-left">
+                <p className="text-base sm:text-lg font-semibold text-gray-900">
                   Cellphone:
                 </p>
-                <p className="text-lg text-gray-900">+63 995 324 3922</p>
+                <p className="text-base sm:text-lg text-gray-900">
+                  +63 995 324 3922
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-4 p-4 sm:p-0 bg-white sm:bg-transparent rounded-lg sm:rounded-none shadow-sm sm:shadow-none">
               {/* Phone Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                className="w-8 h-8 text-black"
+                className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-black flex-shrink-0"
               >
                 <path
                   stroke="#000"
@@ -97,34 +99,36 @@ const OfficeShowroomSection = () => {
                   d="M22 16.92V19a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h2.09a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11l-.27.27a16 16 0 0 0 6.29 6.29l.27-.27a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"
                 />
               </svg>
-              <div>
-                <p className="text-lg font-semibold text-gray-900">
+              <div className="text-center sm:text-left">
+                <p className="text-base sm:text-lg font-semibold text-gray-900">
                   Telephone:
                 </p>
-                <p className="text-lg text-gray-900">(02) 8876-7285</p>
+                <p className="text-base sm:text-lg text-gray-900">
+                  (02) 8876-7285
+                </p>
               </div>
             </div>
           </div>
 
           {/* Showroom Images */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="space-y-4 sm:space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-6 mb-8 sm:mb-10 md:mb-12">
             <div className="md:col-span-3">
               <img
                 src="/showroom-page/1.png"
                 alt="EcoHomeArt Showroom Exterior"
-                className="w-full h-80 md:h-[28rem] object-cover rounded-lg shadow-lg"
+                className="w-full h-64 sm:h-80 md:h-96 lg:h-[28rem] object-cover rounded-lg shadow-lg"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4 md:col-span-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:col-span-3">
               <img
                 src="/showroom-page/2.png"
                 alt="Showroom Interior 1"
-                className="w-full h-48 md:h-64 object-cover rounded-lg shadow-lg"
+                className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-lg shadow-lg"
               />
               <img
                 src="/showroom-page/3.png"
                 alt="Showroom Interior 2"
-                className="w-full h-48 md:h-64 object-cover rounded-lg shadow-lg"
+                className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-lg shadow-lg"
               />
             </div>
           </div>
@@ -135,7 +139,7 @@ const OfficeShowroomSection = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Office Hours
               </h3>
-              <p className="text-gray-900">
+              <p className="text-sm sm:text-base text-gray-900">
                 Monday – Saturday, 10:00 AM – 5:00 PM
               </p>
             </div>
@@ -143,14 +147,18 @@ const OfficeShowroomSection = () => {
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Weekend Visits
               </h3>
-              <p className="text-gray-900 mb-1">By appointment only</p>
-              <p className="text-gray-900">Contact: +63 995 324 3922</p>
+              <p className="text-sm sm:text-base text-gray-900 mb-1">
+                By appointment only
+              </p>
+              <p className="text-sm sm:text-base text-gray-900">
+                Contact: +63 995 324 3922
+              </p>
             </div>
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
                 Deliveries
               </h3>
-              <p className="text-gray-900">
+              <p className="text-sm sm:text-base text-gray-900">
                 Monday – Saturday, 10:00 AM – 5:00 PM
               </p>
             </div>
