@@ -112,8 +112,26 @@ const FeaturedCollectionSection = () => (
         </nav>
 
         <div className="mt-16">
-          <div className="border-b border-white/20 pb-4">
-            <span className="text-lg">Contact Us</span>
+          <div className="border-b border-white/20 pb-4 flex items-center justify-between">
+            <Link
+              to="/contact"
+              className="text-lg hover:text-white/80 transition-colors"
+            >
+              Contact Us
+            </Link>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
           </div>
         </div>
       </div>

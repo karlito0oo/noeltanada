@@ -7,6 +7,7 @@ import Media from "./pages/Media/Media";
 import About from "./pages/About/About";
 import Profile from "./pages/Profile/Profile";
 import Showroom from "./pages/Showroom/Showroom";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/showroom" element={<Showroom />} />
+        <Route path="/contact" element={<ContactUs />} />
       </Routes>
     </Router>
   );
