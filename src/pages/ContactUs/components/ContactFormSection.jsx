@@ -70,7 +70,7 @@ const ContactFormSection = () => {
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
               Email Address
             </h3>
-            <p className="text-lg text-gray-900">info.alphaddsi@gmail.com</p>
+            <p className="text-lg text-gray-900">info.noeltanada.com</p>
           </div>
         </div>
 
