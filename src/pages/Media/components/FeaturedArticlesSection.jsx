@@ -47,61 +47,78 @@ const FeaturedArticlesSection = () => {
 
   return (
     <section
-      className="px-4 md:px-20 py-8 bg-white"
+      className="px-6 sm:px-8 md:px-12 lg:px-20 py-12 sm:py-16 md:py-20 bg-white"
       style={{ backgroundColor: "#fcf8f5" }}
     >
-      <h2 className="text-5xl font-serif font-normal mb-12 text-black">
-        Featured Articles
-      </h2>
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-normal mb-12 sm:mb-16 md:mb-20 text-black text-center">
+          Featured Articles
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {articles.map((article) => (
-          <div
-            key={article.id}
-            className="p-8 rounded-lg flex flex-col h-full justify-between"
-            style={{ backgroundColor: article.backgroundColor }}
-          >
-            {/* Quote */}
-            <h3
-              className={`text-xl font-medium mb-2 text-center ${
-                article.textColor === "white" ? "text-white" : "text-black"
-              }`}
+      <div className="max-w-4xl mx-auto">
+        <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-1 lg:grid-cols-2 md:gap-8">
+          {articles.map((article) => (
+            <div
+              key={article.id}
+              className="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden mx-auto max-w-md md:max-w-none"
+              style={{ backgroundColor: article.backgroundColor }}
             >
-              "{article.quote}"
-            </h3>
+            {/* Mobile-First Card Layout */}
+            <div className="p-8 sm:p-10 md:p-12 flex flex-col min-h-[500px] sm:min-h-[550px] md:min-h-[600px] justify-center">
+              
+              {/* Quote - Prominent Mobile Design */}
+              <div className="text-center mb-8">
+                <h3
+                  className={`text-xl sm:text-2xl md:text-3xl font-medium leading-relaxed mb-4 ${
+                    article.textColor === "white" ? "text-white" : "text-black"
+                  }`}
+                >
+                  "{article.quote}"
+                </h3>
 
-            {/* Source */}
-            <p
-              className={`text-sm mb-6 italic text-center ${
-                article.textColor === "white"
-                  ? "text-white/80"
-                  : "text-gray-600"
-              }`}
-            >
-              – {article.source}
-            </p>
+                {/* Source - Better Mobile Styling */}
+                <p
+                  className={`text-sm sm:text-base font-medium tracking-wide ${
+                    article.textColor === "white"
+                      ? "text-white/90"
+                      : "text-gray-700"
+                  }`}
+                >
+                  — {article.source}
+                </p>
+              </div>
 
-            {/* Description */}
-            <p
-              className={`text-sm leading-relaxed mb-8 ${
-                article.textColor === "white"
-                  ? "text-white/90"
-                  : "text-gray-700"
-              }`}
-            >
-              {article.description}
-            </p>
+              {/* Description - Mobile Optimized */}
+              <div className="mb-6">
+                <p
+                  className={`text-sm sm:text-base md:text-lg leading-relaxed text-center ${
+                    article.textColor === "white"
+                      ? "text-white/85"
+                      : "text-gray-600"
+                  }`}
+                >
+                  {article.description}
+                </p>
+              </div>
 
-            {/* Logo */}
-            <div className="flex justify-center mt-auto">
-              <img
-                src={article.logo}
-                alt="Publication logo"
-                className="h-8 object-contain"
-              />
+              {/* Logo - Enhanced Mobile Display */}
+              <div className="flex justify-center items-end mt-auto pt-4 border-t border-white/20">
+                <img
+                  src={article.logo}
+                  alt="Publication logo"
+                  className="h-8 sm:h-10 md:h-12 object-contain filter brightness-0 invert opacity-80"
+                  style={{
+                    filter: article.textColor === "white" 
+                      ? "brightness(0) invert(1) opacity(0.9)" 
+                      : "brightness(0) opacity(0.7)"
+                  }}
+                />
+              </div>
             </div>
           </div>
         ))}
+        </div>
+      </div>
       </div>
     </section>
   );
