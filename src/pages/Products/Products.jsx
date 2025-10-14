@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import FooterSection from "../../components/FooterSection";
 import BackToHomepageHeader from "../../components/BackToHomepageHeader";
 import { useAllProducts } from "../../constants";
+import usePageTitle from "../../hooks/usePageTitle";
 
 const Products = () => {
+  usePageTitle("Products");
   const [selectedAvailability, setSelectedAvailability] =
     useState("Availability");
   const [selectedPrice, setSelectedPrice] = useState("Price");

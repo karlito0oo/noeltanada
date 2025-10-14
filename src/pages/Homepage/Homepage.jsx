@@ -6,8 +6,10 @@ import OurStorySection from "./components/OurStorySection";
 import FeaturedArticlesSection from "./components/FeaturedArticlesSection";
 import FeaturedVideosSection from "./components/FeaturedVideosSection";
 import FooterSection from "../../components/FooterSection";
+import usePageTitle from "../../hooks/usePageTitle";
 
 function Homepage() {
+  usePageTitle("Home");
   return (
     <>
       <HeroSection />

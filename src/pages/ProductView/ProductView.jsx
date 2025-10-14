@@ -4,10 +4,14 @@ import BackToHomepageHeader from "../../components/BackToHomepageHeader";
 import FooterSection from "../../components/FooterSection";
 import ProductDetailSection from "./components/ProductDetailSection";
 import { useAllProducts } from "../../constants";
+import usePageTitle from "../../hooks/usePageTitle";
 
 const ProductView = () => {
   const { id } = useParams();
   const product = useAllProducts.find((p) => p.id === parseInt(id));
+  
+  // Set dynamic title based on product name
+  usePageTitle(product ? product.name : "Product Not Found");
 
   if (!product) {
     return (
