@@ -6,8 +6,27 @@ const FeaturedCollectionSection = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   const featuredProducts = useAllProducts.filter((p) => p.isFeatured);
+  
+  // Search functionality
+  const searchProducts = useAllProducts.filter((product) =>
+    searchQuery.length > 0 && (
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (product.material && product.material.toLowerCase().includes(searchQuery.toLowerCase()))
+    )
+  );
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    setShowSearchResults(query.length > 0);
+    setCurrentPage(0); // Reset to first page when searching
+  };
 
   // Check if mobile view
   useEffect(() => {
@@ -20,12 +39,14 @@ const FeaturedCollectionSection = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Determine which products to show based on search state
+  const displayProducts = showSearchResults ? searchProducts : featuredProducts;
   const itemsPerPage = isMobile ? 2 : 6; // Mobile: 2 stacked, Desktop: 6 in grid (2 rows x 3 cols)
-  const totalPages = Math.ceil(featuredProducts.length / itemsPerPage);
+  const totalPages = Math.ceil(displayProducts.length / itemsPerPage);
 
   const getCurrentPageProducts = () => {
     const startIndex = currentPage * itemsPerPage;
-    return featuredProducts.slice(startIndex, startIndex + itemsPerPage);
+    return displayProducts.slice(startIndex, startIndex + itemsPerPage);
   };
 
   return (
@@ -73,6 +94,8 @@ const FeaturedCollectionSection = () => {
                 <input
                   type="text"
                   placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="w-full bg-transparent border-b border-white/30 px-4 py-3 text-white placeholder-white/70 focus:outline-none text-base"
                 />
                 <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,7 +202,9 @@ const FeaturedCollectionSection = () => {
             <div className="relative flex-1">
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full bg-transparent border-b border-white/30 px-4 py-2 text-white placeholder-white/70 focus:outline-none"
               />
               <svg
@@ -310,9 +335,24 @@ const FeaturedCollectionSection = () => {
       <div className="flex-1 p-4 sm:p-6 lg:p-12">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 lg:mb-12 space-y-4 sm:space-y-0">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900">
-            Featured Collection
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900">
+              {showSearchResults ? "Search Results" : "Featured Collection"}
+            </h1>
+            {showSearchResults && (
+              <div className="flex items-center space-x-2 mt-2">
+                <p className="text-sm text-gray-600">
+                  {displayProducts.length} product{displayProducts.length !== 1 ? 's' : ''} found for "{searchQuery}"
+                </p>
+                <button
+                  onClick={() => handleSearch("")}
+                  className="text-sm text-blue-600 hover:text-blue-800 underline"
+                >
+                  Clear search
+                </button>
+              </div>
+            )}
+          </div>
           <Link
             to="/products"
             className="w-full sm:w-auto text-center px-4 sm:px-8 py-2 sm:py-3 text-white font-medium uppercase tracking-wide hover:opacity-90 transition inline-block text-sm sm:text-base"
@@ -323,7 +363,22 @@ const FeaturedCollectionSection = () => {
         </div>
 
         {/* Product Grid - Responsive Layout */}
-        {isMobile ? (
+        {displayProducts.length === 0 && showSearchResults ? (
+          // No search results
+          <div className="text-center py-12">
+            <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+            <p className="text-gray-600 mb-4">Try searching with different keywords</p>
+            <button
+              onClick={() => handleSearch("")}
+              className="px-4 py-2 bg-[#7d6040] text-white rounded hover:bg-[#6d5235] transition-colors"
+            >
+              Browse Featured Products
+            </button>
+          </div>
+        ) : isMobile ? (
           // Mobile: 2 Products Stacked Per Page
           <div className="space-y-6 mb-6">
             {getCurrentPageProducts().map((product) => (
