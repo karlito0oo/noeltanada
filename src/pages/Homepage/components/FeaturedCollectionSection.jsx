@@ -56,15 +56,22 @@ const FeaturedCollectionSection = () => (
                 className="flex items-center justify-between py-2 border-b border-white/10"
               >
                 {item === "Products" ? (
-                  <Link 
-                    to="/products" 
+                  <Link
+                    to="/products"
                     className="text-lg hover:text-white/80 transition-colors"
                   >
                     {item}
                   </Link>
                 ) : item === "Catalogue" ? (
-                  <Link 
-                    to="/catalouge" 
+                  <Link
+                    to="/catalouge"
+                    className="text-lg hover:text-white/80 transition-colors"
+                  >
+                    {item}
+                  </Link>
+                ) : item === "Media" ? (
+                  <Link
+                    to="/media"
                     className="text-lg hover:text-white/80 transition-colors"
                   >
                     {item}
