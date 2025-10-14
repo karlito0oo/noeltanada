@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage/Homepage";
 import Products from "./pages/Products/Products";
 import Catalouge from "./pages/Catalogue/Catalouge";
 import Media from "./pages/Media/Media";
+import About from "./pages/About/About";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/catalouge" element={<Catalouge />} />
         <Route path="/media" element={<Media />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   );
