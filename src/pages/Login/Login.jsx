@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePageTitle from "../../hooks/usePageTitle.js";
+import apiService from "../../services/ApiService.js";
 
 const Login = () => {
   usePageTitle("Admin Login");
@@ -27,28 +28,16 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const data = await apiService.login(formData);
 
-      const data = await response.json();
+      // Store token and user data
+      localStorage.setItem("auth_token", data.token);
+      localStorage.setItem("user_data", JSON.stringify(data.user));
 
-      if (data.success) {
-        // Store token and user data
-        localStorage.setItem("auth_token", data.token);
-        localStorage.setItem("user_data", JSON.stringify(data.user));
-
-        // Redirect to admin dashboard (you'll need to create this)
-        navigate("/admin/dashboard");
-      } else {
-        setError(data.message || "Login failed");
-      }
+      // Redirect to admin dashboard
+      navigate("/admin/dashboard");
     } catch (err) {
-      setError("Network error. Please try again.");
+      setError(err.message || "Login failed");
       console.error("Login error:", err);
     } finally {
       setLoading(false);

@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('category');
-            $table->string('image');
-            $table->json('images'); // Array of image paths
-            $table->string('type');
+            $table->string('image')->nullable();
+            $table->json('images')->nullable(); // Array of image paths
+            $table->string('type')->nullable();
             $table->decimal('price', 10, 2);
             $table->enum('availability', ['In Stock', 'Out of Stock'])->default('In Stock');
-            $table->date('date_added');
-            $table->string('dimensions');
-            $table->string('material');
-            $table->text('description');
-            $table->json('material_options'); // Array of material options
+            $table->date('date_added')->nullable();
+            $table->string('dimensions')->nullable();
+            $table->string('material')->nullable();
+            $table->text('description')->nullable();
+            $table->json('material_options')->nullable(); // Array of material options
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
         });

@@ -30,4 +30,28 @@ class Product extends Model
         'is_featured' => 'boolean',
         'date_added' => 'date'
     ];
+
+    /**
+     * Append image URLs to JSON output
+     */
+    protected $appends = ['image_url', 'images_urls'];
+
+    /**
+     * Get the full URL for the main image.
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image ? asset('storage/' . $this->image) : null;
+    }
+
+    /**
+     * Get the full URLs for all images.
+     */
+    public function getImagesUrlsAttribute()
+    {
+        if (!$this->images) return [];
+        return array_map(function ($image) {
+            return $image ? asset('storage/' . $image) : null;
+        }, $this->images);
+    }
 }

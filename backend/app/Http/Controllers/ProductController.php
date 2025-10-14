@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -46,8 +47,10 @@ class ProductController extends Controller
         $query->orderBy($sortBy, $sortOrder);
 
         // Paginate
-        $perPage = $request->get('per_page', 15);
+        $perPage = $request->get('per_page', 9999);
         $products = $query->paginate($perPage);
+
+        // Image URLs are automatically transformed by model accessors
 
         return response()->json($products);
     }
@@ -56,28 +59,41 @@ class ProductController extends Controller
      * Store a newly created product.
      */
     public function store(Request $request): JsonResponse
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'image' => 'required|string|max:500',
-            'images' => 'required|array',
-            'images.*' => 'string|max:500',
-            'type' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'availability' => ['required', Rule::in(['In Stock', 'Out of Stock'])],
-            'date_added' => 'required|date',
-            'dimensions' => 'required|string|max:255',
-            'material' => 'required|string|max:255',
-            'description' => 'required|string',
-            'material_options' => 'required|array',
-            'material_options.*.label' => 'required|string',
-            'material_options.*.value' => 'required|string',
-            'is_featured' => 'boolean'
-        ]);
+    {   
+        
+        // Get all request data without strict validation
+        $validatedData = $request->all();
+
+        // Handle single image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        // Handle multiple images upload
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('products', 'public');
+                $imagePaths[] = $imagePath;
+            }
+        }
+
+        // Set default values for nullable fields
+        $validatedData['date_added'] = now()->format('Y-m-d');
+        $validatedData['images'] = !empty($imagePaths) ? $imagePaths : [$validatedData['image'] ?? ''];
+        $validatedData['material_options'] = $validatedData['material_options'] ?? [];
+        $validatedData['dimensions'] = $validatedData['dimensions'] ?? '';
+        $validatedData['material'] = $validatedData['material'] ?? '';
+
+        // Decode JSON string for material_options if it exists
+        if (isset($validatedData['material_options']) && is_string($validatedData['material_options'])) {
+            $validatedData['material_options'] = json_decode($validatedData['material_options'], true) ?? [];
+        }
 
         $product = Product::create($validatedData);
 
+        // Image URLs are automatically transformed by model accessors
         return response()->json([
             'message' => 'Product created successfully',
             'product' => $product
@@ -89,6 +105,7 @@ class ProductController extends Controller
      */
     public function show(Product $product): JsonResponse
     {
+        // Image URLs are automatically transformed by model accessors
         return response()->json($product);
     }
 
@@ -97,27 +114,53 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product): JsonResponse
     {
-        $validatedData = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'category' => 'sometimes|string|max:255',
-            'image' => 'sometimes|string|max:500',
-            'images' => 'sometimes|array',
-            'images.*' => 'string|max:500',
-            'type' => 'sometimes|string|max:255',
-            'price' => 'sometimes|numeric|min:0',
-            'availability' => ['sometimes', Rule::in(['In Stock', 'Out of Stock'])],
-            'date_added' => 'sometimes|date',
-            'dimensions' => 'sometimes|string|max:255',
-            'material' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string',
-            'material_options' => 'sometimes|array',
-            'material_options.*.label' => 'required_with:material_options|string',
-            'material_options.*.value' => 'required_with:material_options|string',
-            'is_featured' => 'boolean'
-        ]);
+        // Get all request data without strict validation
+        $validatedData = $request->all();
+
+        // Handle single image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($product->image && \Storage::disk('public')->exists($product->image)) {
+                \Storage::disk('public')->delete($product->image);
+            }
+            
+            $imagePath = $request->file('image')->store('products', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+
+        // Handle multiple images upload
+        if ($request->hasFile('images')) {
+            // Delete old images if they exist
+            if ($product->images && is_array($product->images)) {
+                foreach ($product->images as $oldImage) {
+                    if ($oldImage && \Storage::disk('public')->exists($oldImage)) {
+                        \Storage::disk('public')->delete($oldImage);
+                    }
+                }
+            }
+
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store('products', 'public');
+                $imagePaths[] = $imagePath;
+            }
+            $validatedData['images'] = $imagePaths;
+        } elseif (isset($validatedData['image']) && !$request->hasFile('images')) {
+            // If only single image is updated, update the images array too
+            $validatedData['images'] = [$validatedData['image']];
+        }
+
+        // Decode JSON string for material_options if it exists
+        if (isset($validatedData['material_options']) && is_string($validatedData['material_options'])) {
+            $validatedData['material_options'] = json_decode($validatedData['material_options'], true) ?? [];
+        }
 
         $product->update($validatedData);
 
+        // Refresh the product to get updated data
+        $product->refresh();
+
+        // Image URLs are automatically transformed by model accessors
         return response()->json([
             'message' => 'Product updated successfully',
             'product' => $product
@@ -143,6 +186,7 @@ class ProductController extends Controller
     {
         $products = Product::where('is_featured', true)->get();
         
+        // Image URLs are automatically transformed by model accessors
         return response()->json($products);
     }
 
@@ -153,6 +197,7 @@ class ProductController extends Controller
     {
         $product->update(['is_featured' => !$product->is_featured]);
 
+        // Image URLs are automatically transformed by model accessors
         return response()->json([
             'message' => 'Product featured status updated successfully',
             'product' => $product

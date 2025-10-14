@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import apiService from "../../../services/ApiService.js";
 
 const ContactFormSection = () => {
   const [formData, setFormData] = useState({
@@ -24,32 +25,18 @@ const ContactFormSection = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      await apiService.sendContactEmail(formData);
+      
+      setSubmitStatus('success');
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
       });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
-      } else {
-        setSubmitStatus('error');
-        console.error('Form submission error:', result);
-      }
     } catch (error) {
       setSubmitStatus('error');
-      console.error('Network error:', error);
+      console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
       // Clear status message after 5 seconds

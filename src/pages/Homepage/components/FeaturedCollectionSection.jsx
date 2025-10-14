@@ -561,7 +561,7 @@ const FeaturedCollectionSection = () => {
                     {/* Product Image */}
                     <div>
                       <img
-                        src={`/${product.images?.[0] || product.image}`}
+                        src={product.images_urls?.[0] || product.image_url}
                         alt={product.name}
                         className="w-full h-48 sm:h-56 object-contain"
                       />
@@ -601,7 +601,7 @@ const FeaturedCollectionSection = () => {
               >
                 <div className="bg-white rounded-lg p-8 mb-4 shadow-sm group-hover:shadow-md transition-shadow">
                   <img
-                    src={`/${product.images?.[0] || product.image}`}
+                    src={product.images_urls?.[0] || product.image_url}
                     alt={product.name}
                     className="w-full h-64 object-contain"
                   />

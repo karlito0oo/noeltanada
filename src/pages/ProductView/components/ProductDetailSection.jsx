@@ -49,7 +49,7 @@ const ProductDetailSection = ({ product }) => {
             {/* Main Image */}
             <div className="relative">
               <img
-                src={`/${product.images?.[selectedImage] || product.image}`}
+                src={product.images_urls?.[selectedImage] || product.image_url}
                 alt={product.name}
                 className="w-full h-96 md:h-[500px] object-contain bg-gray-50"
               />
@@ -91,9 +91,9 @@ const ProductDetailSection = ({ product }) => {
                 </button>
 
                 {/* Thumbnail Images - Vertically Stacked */}
-                {product.images && product.images.length > 1 && (
+                {product.images_urls && product.images_urls.length > 1 && (
                   <div className="flex flex-col space-y-2 mt-2">
-                    {product.images.map((image, index) => (
+                    {product.images_urls.map((image, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImage(index)}
