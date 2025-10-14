@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AboutNoel = () => (
   <section className="bg-[#fcf9f4] min-h-screen flex items-center justify-center py-16 px-4">
@@ -22,12 +23,12 @@ const AboutNoel = () => (
           purposeful — uplifting communities, reducing waste, and reimagining
           how materials can be used in everyday life.
         </p>
-        <a
-          href="#"
+        <Link
+          to="/profile"
           className="text-lg italic underline text-gray-700 hover:text-gray-900 transition"
         >
           See more...
-        </a>
+        </Link>
       </div>
       {/* Right: Image */}
       <div className="flex justify-center items-center">

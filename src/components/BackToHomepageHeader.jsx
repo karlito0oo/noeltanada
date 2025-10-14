@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const BackToHomepageHeader = () => {
   return (
-    <div className="px-4 md:px-20 py-4 border-b border-gray-200">
+    <div className="px-4 md:px-20 py-4 border-b border-gray-200 bg-white">
       <Link
         to="/"
         className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
