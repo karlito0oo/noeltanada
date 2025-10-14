@@ -172,8 +172,8 @@ const FeaturedCollectionSection = () => (
       {/* Product Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         {/* Product 1 */}
-        <div className="text-center">
-          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm">
+        <Link to="/product/1" className="text-center group">
+          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm group-hover:shadow-md transition-shadow">
             <img
               src="/featured_collection1.png"
               alt="Philibar Chair"
@@ -182,11 +182,11 @@ const FeaturedCollectionSection = () => (
           </div>
           <h3 className="text-xl font-medium mb-1">PHILIBAR | CHAIR</h3>
           <p className="text-gray-600">PHP 9,699</p>
-        </div>
+        </Link>
 
         {/* Product 2 */}
-        <div className="text-center">
-          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm">
+        <Link to="/product/2" className="text-center group">
+          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm group-hover:shadow-md transition-shadow">
             <img
               src="/featured_collection2.png"
               alt="Tramazzo Table"
@@ -195,11 +195,11 @@ const FeaturedCollectionSection = () => (
           </div>
           <h3 className="text-xl font-medium mb-1">TRAMAZZO | TABLE</h3>
           <p className="text-gray-600">PHP 14,999</p>
-        </div>
+        </Link>
 
         {/* Product 3 */}
-        <div className="text-center">
-          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm">
+        <Link to="/product/3" className="text-center group">
+          <div className="bg-white rounded-lg p-8 mb-4 shadow-sm group-hover:shadow-md transition-shadow">
             <img
               src="/featured_collection3.png"
               alt="Avatar Lamp"
@@ -208,7 +208,7 @@ const FeaturedCollectionSection = () => (
           </div>
           <h3 className="text-xl font-medium mb-1">AVATAR | LAMP</h3>
           <p className="text-gray-600">PHP 17,250</p>
-        </div>
+        </Link>
       </div>
 
       {/* Pagination Dots */}

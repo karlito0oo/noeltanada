@@ -8,6 +8,7 @@ import About from "./pages/About/About";
 import Profile from "./pages/Profile/Profile";
 import Showroom from "./pages/Showroom/Showroom";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import ProductView from "./pages/ProductView/ProductView";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductView />} />
         <Route path="/catalouge" element={<Catalouge />} />
         <Route path="/media" element={<Media />} />
         <Route path="/about" element={<About />} />
