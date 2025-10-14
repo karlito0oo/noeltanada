@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FooterSection from "../Homepage/components/FooterSection";
+import FooterSection from "../../components/FooterSection";
 
 const Products = () => {
   const [selectedAvailability, setSelectedAvailability] =

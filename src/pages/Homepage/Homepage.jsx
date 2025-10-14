@@ -5,7 +5,7 @@ import FeaturedCollectionSection from "./components/FeaturedCollectionSection";
 import OurStorySection from "./components/OurStorySection";
 import FeaturedArticlesSection from "./components/FeaturedArticlesSection";
 import FeaturedVideosSection from "./components/FeaturedVideosSection";
-import FooterSection from "./components/FooterSection";
+import FooterSection from "../../components/FooterSection";
 
 function Homepage() {
   return (
@@ -16,7 +16,7 @@ function Homepage() {
       <OurStorySection />
       <FeaturedArticlesSection />
       <FeaturedVideosSection />
-      <FooterSection />
+      <FooterSection showFollowUsAndTC={true} />
     </>
   );
 }
