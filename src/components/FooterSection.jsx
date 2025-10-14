@@ -1,6 +1,6 @@
 import React from "react";
 
-const FooterSection = ({ showFollowUsAndTC = false }) => (
+const FooterSection = ({ showFollowUsAndTC = false, bgColor = "#7d574a" }) => (
   <footer className="relative">
     {/* Background Image Section */}
     {showFollowUsAndTC && (
@@ -57,7 +57,7 @@ const FooterSection = ({ showFollowUsAndTC = false }) => (
     )}
 
     {/* Bottom Contact Section */}
-    <div className="bg-[#7d574a] py-12 px-4 md:px-20">
+    <div className={`bg-[${bgColor}] py-12 px-4 md:px-20`}>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
           {/* Address */}

@@ -6,6 +6,7 @@ import Catalouge from "./pages/Catalogue/Catalouge";
 import Media from "./pages/Media/Media";
 import About from "./pages/About/About";
 import Profile from "./pages/Profile/Profile";
+import Showroom from "./pages/Showroom/Showroom";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/media" element={<Media />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/showroom" element={<Showroom />} />
       </Routes>
     </Router>
   );

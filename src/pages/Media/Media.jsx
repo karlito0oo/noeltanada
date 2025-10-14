@@ -14,7 +14,7 @@ const Catalouge = () => {
       <MediaSection />
 
       <FeaturedArticlesSection />
-      
+
       <FeaturedVideosSection />
 
       <FooterSection />

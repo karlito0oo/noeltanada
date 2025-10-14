@@ -83,6 +83,13 @@ const FeaturedCollectionSection = () => (
                   >
                     {item}
                   </Link>
+                ) : item === "Workshop" ? (
+                  <Link
+                    to="/showroom"
+                    className="text-lg hover:text-white/80 transition-colors"
+                  >
+                    {item}
+                  </Link>
                 ) : (
                   <span className="text-lg">{item}</span>
                 )}
