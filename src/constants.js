@@ -17,6 +17,7 @@ export const useAllProducts = [
       { label: "with cushion", value: "cushion" },
       { label: "without cushion", value: "no-cushion" },
     ],
+    isFeatured: true,
   },
   {
     id: 2,
@@ -384,6 +385,7 @@ export const useAllProducts = [
       { label: "matte black", value: "matte-black" },
       { label: "polished chrome", value: "chrome" },
     ],
+    isFeatured: true,
   },
   {
     id: 22,
@@ -420,6 +422,7 @@ export const useAllProducts = [
       { label: "green shade", value: "green" },
       { label: "white shade", value: "white" },
     ],
+    isFeatured: true,
   },
   {
     id: 24,
@@ -496,6 +499,7 @@ export const useAllProducts = [
       { label: "clear glass", value: "clear" },
       { label: "smoked glass", value: "smoked" },
     ],
+    isFeatured: true,
   },
   {
     id: 28,
@@ -589,6 +593,7 @@ export const useAllProducts = [
       { label: "white ceramic", value: "white" },
       { label: "natural bamboo", value: "bamboo" },
     ],
+    isFeatured: true,
   },
   {
     id: 33,
