@@ -62,7 +62,7 @@
         <div class="field">
             <strong>Message:</strong>
             <p style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 5px;">
-                {{ $message }}
+                {{ $messagee }}
             </p>
         </div>
     </div>

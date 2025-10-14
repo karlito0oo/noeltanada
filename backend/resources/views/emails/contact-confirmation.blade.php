@@ -58,7 +58,7 @@
         <p><strong>Subject:</strong> {{ $subject }}</p>
         <p><strong>Message:</strong></p>
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; border-left: 4px solid #7d6040;">
-            {{ $message }}
+            {{ $messagee }}
         </div>
     </div>
     

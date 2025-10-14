@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\ContactFormMail;
+use App\Mail\ContactConfirmationMail;
 
 class EmailController extends Controller
 {
@@ -34,17 +36,12 @@ class EmailController extends Controller
         
         try {
             // Send email to admin
-            Mail::send('emails.contact', $data, function ($message) use ($data) {
-                $message->to(config('mail.inquiry_send_address', 'info.alphaddsi@gmail.com'))
-                        ->subject('New Contact Form Submission: ' . $data['subject'])
-                        ->replyTo($data['email'], $data['name']);
-            });
+            Mail::to('info.alphaddsi@gmail.com')
+                ->send(new ContactFormMail($data));
 
-            // Send confirmation email to user
-            Mail::send('emails.contact-confirmation', $data, function ($message) use ($data) {
-                $message->to($data['email'], $data['name'])
-                        ->subject('Thank you for contacting Noel Tañada');
-            });
+            // Send confirmation email to user  
+            Mail::to($data['email'])
+                ->send(new ContactConfirmationMail($data));
 
             return response()->json([
                 'success' => true,
@@ -82,15 +79,15 @@ class EmailController extends Controller
         
         try {
             // Send welcome email to subscriber
-            Mail::send('emails.newsletter-welcome', $data, function ($message) use ($data) {
-                $message->to($data['email'], $data['name'] ?? 'Subscriber')
-                        ->subject('Welcome to Noel Tañada Newsletter');
+            Mail::send('emails.newsletter-welcome', $data, function ($mail) use ($data) {
+                $mail->to($data['email'], $data['name'] ?? 'Subscriber')
+                     ->subject('Welcome to Noel Tañada Newsletter');
             });
 
             // Notify admin about new subscription
-            Mail::send('emails.new-subscriber', $data, function ($message) use ($data) {
-                $message->to(config('mail.admin_email', 'admin@noeltanada.com'))
-                        ->subject('New Newsletter Subscription');
+            Mail::send('emails.new-subscriber', $data, function ($mail) use ($data) {
+                $mail->to(config('mail.admin_email', 'admin@noeltanada.com'))
+                     ->subject('New Newsletter Subscription');
             });
 
             return response()->json([
