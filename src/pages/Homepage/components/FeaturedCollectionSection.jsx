@@ -10,16 +10,20 @@ const FeaturedCollectionSection = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   const featuredProducts = useAllProducts.filter((p) => p.isFeatured);
-  
+
   // Search functionality
-  const searchProducts = useAllProducts.filter((product) =>
-    searchQuery.length > 0 && (
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (product.material && product.material.toLowerCase().includes(searchQuery.toLowerCase()))
-    )
+  const searchProducts = useAllProducts.filter(
+    (product) =>
+      searchQuery.length > 0 &&
+      (product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (product.description &&
+          product.description
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())) ||
+        (product.material &&
+          product.material.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
   const handleSearch = (query) => {
@@ -56,16 +60,36 @@ const FeaturedCollectionSection = () => {
         <img src="/logo-short.png" alt="Noel Tanada" className="h-8" />
         <div className="flex items-center space-x-4">
           <div className="w-8 h-8 border border-white rounded flex items-center justify-center">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"
+              />
             </svg>
           </div>
           <button
             onClick={() => setSidebarOpen(true)}
             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
@@ -74,7 +98,10 @@ const FeaturedCollectionSection = () => {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 z-50 flex">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black/50"
+            onClick={() => setSidebarOpen(false)}
+          />
           <div className="relative bg-[#7d6040] text-white w-80 max-w-[85vw] flex flex-col">
             <div className="p-4 border-b border-white/20 flex items-center justify-between">
               <img src="/logo-short.png" alt="Noel Tanada" className="h-8" />
@@ -82,12 +109,22 @@ const FeaturedCollectionSection = () => {
                 onClick={() => setSidebarOpen(false)}
                 className="p-2 hover:bg-white/10 rounded-lg transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
-            
+
             {/* Mobile Search */}
             <div className="p-4 border-b border-white/20">
               <div className="relative">
@@ -98,81 +135,197 @@ const FeaturedCollectionSection = () => {
                   onChange={(e) => handleSearch(e.target.value)}
                   className="w-full bg-transparent border-b border-white/30 px-4 py-3 text-white placeholder-white/70 focus:outline-none text-base"
                 />
-                <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
               </div>
             </div>
-            
+
             {/* Mobile Navigation */}
             <div className="flex-1 p-4 overflow-y-auto">
               <nav className="space-y-2">
-                {["Products", "Catalogue", "Media", "About", "Workshop"].map((item) => (
-                  <div key={item} className="border-b border-white/10 pb-3">
-                    {item === "Products" ? (
-                      <Link to="/products" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ) : item === "Catalogue" ? (
-                      <Link to="/catalouge" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ) : item === "Media" ? (
-                      <Link to="/media" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ) : item === "About" ? (
-                      <Link to="/about" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ) : item === "Workshop" ? (
-                      <Link to="/showroom" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </Link>
-                    ) : (
-                      <span className="flex items-center justify-between py-3 text-lg">
-                        {item}
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    )}
-                  </div>
-                ))}
-                
+                {["Products", "Catalogue", "Media", "About", "Workshop"].map(
+                  (item) => (
+                    <div key={item} className="border-b border-white/10 pb-3">
+                      {item === "Products" ? (
+                        <Link
+                          to="/products"
+                          onClick={() => setSidebarOpen(false)}
+                          className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                        >
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      ) : item === "Catalogue" ? (
+                        <Link
+                          to="/catalouge"
+                          onClick={() => setSidebarOpen(false)}
+                          className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                        >
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      ) : item === "Media" ? (
+                        <Link
+                          to="/media"
+                          onClick={() => setSidebarOpen(false)}
+                          className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                        >
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      ) : item === "About" ? (
+                        <Link
+                          to="/about"
+                          onClick={() => setSidebarOpen(false)}
+                          className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                        >
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      ) : item === "Workshop" ? (
+                        <Link
+                          to="/showroom"
+                          onClick={() => setSidebarOpen(false)}
+                          className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                        >
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                      ) : (
+                        <span className="flex items-center justify-between py-3 text-lg">
+                          {item}
+                          <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </span>
+                      )}
+                    </div>
+                  )
+                )}
+
                 <div className="border-b border-white/10 pb-3 mt-6">
-                  <Link to="/contact" onClick={() => setSidebarOpen(false)} className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors">
+                  <Link
+                    to="/contact"
+                    onClick={() => setSidebarOpen(false)}
+                    className="flex items-center justify-between py-3 text-lg hover:text-white/80 transition-colors"
+                  >
                     Contact Us
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </Link>
                 </div>
               </nav>
             </div>
-            
+
             {/* Mobile Logo */}
             <div className="p-4 flex flex-col items-center border-t border-white/20">
-              <img src="/logo-full.png" alt="Noel Tanada" className="w-32 mb-2" />
+              <img
+                src="/logo-full.png"
+                alt="Noel Tanada"
+                className="w-32 mb-2"
+              />
               <div className="text-center">
-                <span className="tracking-[0.2em] text-xs text-white font-light">WHERE FURNITURE IS </span>
-                <span className="tracking-[0.2em] text-xs text-red-600 font-light">A</span>
-                <span className="tracking-[0.2em] text-xs text-white font-light">RT</span>
+                <span className="tracking-[0.2em] text-xs text-white font-light">
+                  WHERE FURNITURE IS{" "}
+                </span>
+                <span className="tracking-[0.2em] text-xs text-red-600 font-light">
+                  A
+                </span>
+                <span className="tracking-[0.2em] text-xs text-white font-light">
+                  RT
+                </span>
               </div>
             </div>
           </div>
@@ -342,7 +495,9 @@ const FeaturedCollectionSection = () => {
             {showSearchResults && (
               <div className="flex items-center space-x-2 mt-2">
                 <p className="text-sm text-gray-600">
-                  {displayProducts.length} product{displayProducts.length !== 1 ? 's' : ''} found for "{searchQuery}"
+                  {displayProducts.length} product
+                  {displayProducts.length !== 1 ? "s" : ""} found for "
+                  {searchQuery}"
                 </p>
                 <button
                   onClick={() => handleSearch("")}
@@ -366,11 +521,25 @@ const FeaturedCollectionSection = () => {
         {displayProducts.length === 0 && showSearchResults ? (
           // No search results
           <div className="text-center py-12">
-            <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              className="mx-auto h-16 w-16 text-gray-400 mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-            <p className="text-gray-600 mb-4">Try searching with different keywords</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No products found
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Try searching with different keywords
+            </p>
             <button
               onClick={() => handleSearch("")}
               className="px-4 py-2 bg-[#7d6040] text-white rounded hover:bg-[#6d5235] transition-colors"
@@ -397,7 +566,7 @@ const FeaturedCollectionSection = () => {
                         className="w-full h-48 sm:h-56 object-contain"
                       />
                     </div>
-                    
+
                     {/* Product Info */}
                     <div className="text-center">
                       <h3 className="text-xl sm:text-2xl font-medium mb-2">
