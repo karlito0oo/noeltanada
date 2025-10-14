@@ -7,12 +7,16 @@ import usePageTitle from "../../hooks/usePageTitle";
 const ContactUs = () => {
   usePageTitle("Contact Us");
   return (
-    <div className="bg-[#fcf8f5] min-h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Navigation Header */}
       <BackToHomepageHeader />
 
-      <ContactFormSection />
+      {/* Main Content - grows to fill available space */}
+      <main className="flex-grow">
+        <ContactFormSection />
+      </main>
 
+      {/* Footer - stays at bottom */}
       <FooterSection bgColor="black" />
     </div>
   );

@@ -57,7 +57,10 @@ const FooterSection = ({ showFollowUsAndTC = false, bgColor = "#7d574a" }) => (
     )}
 
     {/* Bottom Contact Section */}
-    <div className={`bg-[${bgColor}] py-12 px-4 md:px-20`}>
+    <div 
+      className="py-12 px-4 md:px-20"
+      style={{ backgroundColor: bgColor }}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
           {/* Address */}

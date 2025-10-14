@@ -26,8 +26,8 @@ const ContactFormSection = () => {
 
     try {
       await apiService.sendContactEmail(formData);
-      
-      setSubmitStatus('success');
+
+      setSubmitStatus("success");
       setFormData({
         name: "",
         email: "",
@@ -35,8 +35,8 @@ const ContactFormSection = () => {
         message: "",
       });
     } catch (error) {
-      setSubmitStatus('error');
-      console.error('Form submission error:', error);
+      setSubmitStatus("error");
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
       // Clear status message after 5 seconds
@@ -75,12 +75,13 @@ const ContactFormSection = () => {
         </div>
 
         {/* Status Messages */}
-        {submitStatus === 'success' && (
+        {submitStatus === "success" && (
           <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-            Thank you for your message! We'll get back to you as soon as possible.
+            Thank you for your message! We'll get back to you as soon as
+            possible.
           </div>
         )}
-        {submitStatus === 'error' && (
+        {submitStatus === "error" && (
           <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             Sorry, there was an error sending your message. Please try again.
           </div>
@@ -151,11 +152,11 @@ const ContactFormSection = () => {
               disabled={isSubmitting}
               className={`px-12 py-4 font-semibold text-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 ${
                 isSubmitting
-                  ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                  : 'bg-black text-white hover:bg-gray-800'
+                  ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                  : "bg-black text-white hover:bg-gray-800"
               }`}
             >
-              {isSubmitting ? 'Sending...' : 'Submit'}
+              {isSubmitting ? "Sending..." : "Submit"}
             </button>
           </div>
         </form>
