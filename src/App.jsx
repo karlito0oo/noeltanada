@@ -9,6 +9,8 @@ import Profile from "./pages/Profile/Profile";
 import Showroom from "./pages/Showroom/Showroom";
 import ContactUs from "./pages/ContactUs/ContactUs";
 import ProductView from "./pages/ProductView/ProductView";
+import Login from "./pages/Login/Login";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 function App() {
   return (
@@ -23,6 +25,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/showroom" element={<Showroom />} />
         <Route path="/contact" element={<ContactUs />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );

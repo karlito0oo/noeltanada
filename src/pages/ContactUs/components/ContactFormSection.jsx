@@ -4,8 +4,11 @@ const ContactFormSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -15,10 +18,43 @@ const ContactFormSection = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus('error');
+        console.error('Form submission error:', result);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      console.error('Network error:', error);
+    } finally {
+      setIsSubmitting(false);
+      // Clear status message after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   return (
@@ -47,9 +83,21 @@ const ContactFormSection = () => {
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
               Email Address
             </h3>
-            <p className="text-lg text-gray-900">info.noeltanada.com</p>
+            <p className="text-lg text-gray-900">info.alphaddsi@gmail.com</p>
           </div>
         </div>
+
+        {/* Status Messages */}
+        {submitStatus === 'success' && (
+          <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            Thank you for your message! We'll get back to you as soon as possible.
+          </div>
+        )}
+        {submitStatus === 'error' && (
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            Sorry, there was an error sending your message. Please try again.
+          </div>
+        )}
 
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -64,6 +112,7 @@ const ContactFormSection = () => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-4 border border-gray-300 rounded-none bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div>
@@ -75,8 +124,23 @@ const ContactFormSection = () => {
                 onChange={handleInputChange}
                 className="w-full px-4 py-4 border border-gray-300 rounded-none bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors"
                 required
+                disabled={isSubmitting}
               />
             </div>
+          </div>
+
+          {/* Subject Field */}
+          <div>
+            <input
+              type="text"
+              name="subject"
+              placeholder="Subject"
+              value={formData.subject}
+              onChange={handleInputChange}
+              className="w-full px-4 py-4 border border-gray-300 rounded-none bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors"
+              required
+              disabled={isSubmitting}
+            />
           </div>
 
           {/* Message Field */}
@@ -89,6 +153,7 @@ const ContactFormSection = () => {
               onChange={handleInputChange}
               className="w-full px-4 py-4 border border-gray-300 rounded-none bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors resize-none"
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -96,9 +161,14 @@ const ContactFormSection = () => {
           <div>
             <button
               type="submit"
-              className="px-12 py-4 bg-black text-white font-semibold text-lg hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+              disabled={isSubmitting}
+              className={`px-12 py-4 font-semibold text-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 ${
+                isSubmitting
+                  ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                  : 'bg-black text-white hover:bg-gray-800'
+              }`}
             >
-              Submit
+              {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
           </div>
         </form>
