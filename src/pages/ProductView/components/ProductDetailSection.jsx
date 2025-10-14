@@ -8,6 +8,9 @@ const ProductDetailSection = ({ product }) => {
   );
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
+  const [showZoomModal, setShowZoomModal] = useState(false);
+  const [showFullscreenModal, setShowFullscreenModal] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   const handleQuantityChange = (increment) => {
     setQuantity((prev) => Math.max(1, prev + increment));
@@ -33,6 +36,43 @@ const ProductDetailSection = ({ product }) => {
     setShowToast(true);
   };
 
+  const handleZoom = () => {
+    setShowZoomModal(true);
+    setZoomLevel(1.5);
+  };
+
+  const handleFullscreen = () => {
+    setShowFullscreenModal(true);
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.5, 4));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.5, 0.5));
+  };
+
+  const closeModal = () => {
+    setShowZoomModal(false);
+    setShowFullscreenModal(false);
+    setZoomLevel(1);
+  };
+
+  // Handle escape key to close modals
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+    
+    if (showZoomModal || showFullscreenModal) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [showZoomModal, showFullscreenModal]);
+
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => setShowToast(false), 2000);
@@ -57,7 +97,11 @@ const ProductDetailSection = ({ product }) => {
               {/* Right Side Controls - Vertically Stacked */}
               <div className="absolute top-4 right-4 flex flex-col items-center space-y-3">
                 {/* Zoom Icon */}
-                <button className="p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg transition-colors border border-gray-200">
+                <button 
+                  onClick={handleZoom}
+                  className="p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg transition-colors border border-gray-200"
+                  title="Zoom Image"
+                >
                   <svg
                     className="w-6 h-6 text-gray-700"
                     fill="none"
@@ -74,7 +118,11 @@ const ProductDetailSection = ({ product }) => {
                 </button>
 
                 {/* Maximize/Fullscreen Icon */}
-                <button className="p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg transition-colors border border-gray-200">
+                <button 
+                  onClick={handleFullscreen}
+                  className="p-3 bg-white hover:bg-gray-50 rounded-full shadow-lg transition-colors border border-gray-200"
+                  title="Fullscreen View"
+                >
                   <svg
                     className="w-6 h-6 text-gray-700"
                     fill="none"
@@ -225,10 +273,128 @@ const ProductDetailSection = ({ product }) => {
               </div>
             )}
           </div>
-
-
         </div>
       </div>
+
+      {/* Zoom Modal */}
+      {showZoomModal && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+          onClick={closeModal}
+        >
+          <div className="relative max-w-5xl max-h-full">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 z-10 p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Zoom Controls */}
+            <div className="absolute top-4 left-4 z-10 flex space-x-2">
+              <button
+                onClick={(e) => { e.stopPropagation(); handleZoomOut(); }}
+                className="p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+                title="Zoom Out"
+              >
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                </svg>
+              </button>
+              <div className="px-3 py-2 bg-white bg-opacity-20 rounded-full text-white text-sm font-medium">
+                {Math.round(zoomLevel * 100)}%
+              </div>
+              <button
+                onClick={(e) => { e.stopPropagation(); handleZoomIn(); }}
+                className="p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+                title="Zoom In"
+              >
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Zoomable Image */}
+            <div 
+              className="overflow-auto max-h-screen"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={product.images_urls?.[selectedImage] || product.image_url}
+                alt={product.name}
+                className="transition-transform duration-200 cursor-grab active:cursor-grabbing"
+                style={{ transform: `scale(${zoomLevel})` }}
+                draggable={false}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen Modal */}
+      {showFullscreenModal && (
+        <div 
+          className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+          onClick={closeModal}
+        >
+          {/* Close Button */}
+          <button
+            onClick={closeModal}
+            className="absolute top-6 right-6 z-10 p-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+          >
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Image Navigation */}
+          {product.images_urls && product.images_urls.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(prev => prev > 0 ? prev - 1 : product.images_urls.length - 1);
+                }}
+                className="absolute left-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+              >
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(prev => prev < product.images_urls.length - 1 ? prev + 1 : 0);
+                }}
+                className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full transition-colors"
+              >
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+
+          {/* Image Counter */}
+          {product.images_urls && product.images_urls.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10 px-4 py-2 bg-white bg-opacity-20 rounded-full text-white text-sm font-medium">
+              {selectedImage + 1} / {product.images_urls.length}
+            </div>
+          )}
+
+          {/* Fullscreen Image */}
+          <img
+            src={product.images_urls?.[selectedImage] || product.image_url}
+            alt={product.name}
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   );
 };
