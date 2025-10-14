@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FooterSection from "../../components/FooterSection";
 import BackToHomepageHeader from "../../components/BackToHomepageHeader";
-import { useAllProducts } from "../../constants";
+import { useProducts } from "../../contexts/ProductsContext";
 import usePageTitle from "../../hooks/usePageTitle";
 
 const Products = () => {
@@ -14,8 +14,8 @@ const Products = () => {
     useState("Product Type");
   const [selectedSort, setSelectedSort] = useState("Date, new to old");
 
-  // Product data with types
-  const allProducts = useAllProducts;
+  // Product data from context
+  const { products: allProducts, loading } = useProducts();
 
   // Filter products based on selected filters
   let filteredProducts = allProducts.filter((product) => {
@@ -42,11 +42,11 @@ const Products = () => {
   // Apply date sorting
   if (selectedSort === "Date, new to old") {
     filteredProducts = [...filteredProducts].sort(
-      (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+      (a, b) => new Date(b.date_added) - new Date(a.date_added)
     );
   } else if (selectedSort === "Date, old to new") {
     filteredProducts = [...filteredProducts].sort(
-      (a, b) => new Date(a.dateAdded) - new Date(b.dateAdded)
+      (a, b) => new Date(a.date_added) - new Date(b.date_added)
     );
   } else if (selectedSort === "Name A-Z") {
     filteredProducts = [...filteredProducts].sort((a, b) =>
@@ -55,6 +55,21 @@ const Products = () => {
   } else if (selectedSort === "Name Z-A") {
     filteredProducts = [...filteredProducts].sort((a, b) =>
       b.name.localeCompare(a.name)
+    );
+  }
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <BackToHomepageHeader />
+        <div className="px-4 md:px-20 py-8 flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#7d6040] mx-auto"></div>
+            <p className="mt-4 text-[#7d6040]">Loading products...</p>
+          </div>
+        </div>
+      </div>
     );
   }
 

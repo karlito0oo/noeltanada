@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAllProducts } from "../../../constants";
+import { useProducts } from "../../../contexts/ProductsContext";
 
 const FeaturedCollectionSection = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -9,10 +9,11 @@ const FeaturedCollectionSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchResults, setShowSearchResults] = useState(false);
 
-  const featuredProducts = useAllProducts.filter((p) => p.isFeatured);
+  const { products, loading, getFeaturedProducts } = useProducts();
+  const featuredProducts = getFeaturedProducts();
 
   // Search functionality
-  const searchProducts = useAllProducts.filter(
+  const searchProducts = products.filter(
     (product) =>
       searchQuery.length > 0 &&
       (product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -42,6 +43,18 @@ const FeaturedCollectionSection = () => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-[#f5f3f0] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#7d6040] mx-auto"></div>
+          <p className="mt-4 text-[#7d6040]">Loading products...</p>
+        </div>
+      </section>
+    );
+  }
 
   // Determine which products to show based on search state
   const displayProducts = showSearchResults ? searchProducts : featuredProducts;

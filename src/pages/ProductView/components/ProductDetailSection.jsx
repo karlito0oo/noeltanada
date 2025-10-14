@@ -4,7 +4,7 @@ import { useState as useToastState, useEffect } from "react";
 const ProductDetailSection = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedMaterial, setSelectedMaterial] = useState(
-    product.materialOptions?.[0]?.value || ""
+    product.material_options?.[0]?.value || ""
   );
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
@@ -104,7 +104,7 @@ const ProductDetailSection = ({ product }) => {
                         } overflow-hidden hover:border-gray-600 transition-colors bg-white shadow-sm`}
                       >
                         <img
-                          src={`/${image}`}
+                          src={image}
                           alt={`${product.name} ${index + 1}`}
                           className="w-full h-full object-contain bg-gray-50"
                         />
@@ -129,7 +129,7 @@ const ProductDetailSection = ({ product }) => {
             </div>
 
             {/* Material Selection */}
-            {product.materialOptions && (
+            {product.material_options && (
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-3 uppercase tracking-wide">
                   Material
@@ -139,7 +139,7 @@ const ProductDetailSection = ({ product }) => {
                   onChange={(e) => setSelectedMaterial(e.target.value)}
                   className="w-full max-w-sm px-4 py-3 border border-gray-300 bg-white text-gray-900 focus:outline-none focus:border-gray-500 text-lg"
                 >
-                  {product.materialOptions.map((option, index) => (
+                  {product.material_options.map((option, index) => (
                     <option key={index} value={option.value}>
                       {option.label}
                     </option>
