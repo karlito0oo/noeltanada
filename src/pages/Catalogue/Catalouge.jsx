@@ -1,6 +1,8 @@
 import React from "react";
 import CatalogueSection from "./components/CatalogueSection";
 import BackToHomepageHeader from "../../components/BackToHomepageHeader";
+import FooterSection from "../../components/FooterSection";
+import MaterialsSwatchesSection from "./components/MaterialsSwatchesSection";
 
 const Catalouge = () => {
   return (
@@ -9,6 +11,10 @@ const Catalouge = () => {
       <BackToHomepageHeader />
 
       <CatalogueSection />
+
+      <MaterialsSwatchesSection />
+
+      <FooterSection />
     </div>
   );
 };
