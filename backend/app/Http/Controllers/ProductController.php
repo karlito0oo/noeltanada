@@ -85,7 +85,7 @@ class ProductController extends Controller
         $validatedData['material_options'] = $validatedData['material_options'] ?? [];
         $validatedData['dimensions'] = $validatedData['dimensions'] ?? '';
         $validatedData['material'] = $validatedData['material'] ?? '';
-        $validatedData['is_featured'] = $validatedData['is_featured'] ?? false;
+        $validatedData['is_featured'] = !empty($validatedData['is_featured']);
 
         // Decode JSON string for material_options if it exists
         if (isset($validatedData['material_options']) && is_string($validatedData['material_options'])) {
@@ -156,8 +156,8 @@ class ProductController extends Controller
             $validatedData['material_options'] = json_decode($validatedData['material_options'], true) ?? [];
         }
 
-        $validatedData['is_featured'] = $validatedData['is_featured'] ?? false;
-        
+        $validatedData['is_featured'] = !empty($validatedData['is_featured']);
+
         $product->update($validatedData);
 
         // Refresh the product to get updated data
