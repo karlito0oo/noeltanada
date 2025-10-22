@@ -1,6 +1,19 @@
 import React from "react";
+import { useCms } from "../../../contexts/CmsContext";
 
 const OfficeShowroomSection = () => {
+  const { settings, isLoading } = useCms();
+
+  if (isLoading) {
+    return (
+      <section className="bg-[#fcf8f5] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-[#fcf8f5] py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -8,7 +21,7 @@ const OfficeShowroomSection = () => {
           {/* Header */}
           <div className="mb-8 sm:mb-12 md:mb-16">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 md:mb-8 text-gray-900 text-center sm:text-left">
-              Office & Showroom
+              {settings?.['showroom.office.title'] || 'Office & Showroom'}
             </h1>
           </div>
         </div>
@@ -41,12 +54,9 @@ const OfficeShowroomSection = () => {
               </svg>
             </div>
             <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 mb-2 leading-tight">
-                17 Valencia Street, Susana Heights Village,
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 mb-2 leading-tight whitespace-pre-line">
+                {settings?.['showroom.office.address'] || '17 Valencia Street, Susana Heights Village,\nTunasan, Muntinlupa City'}
               </h2>
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 leading-tight">
-                Tunasan, Muntinlupa City
-              </p>
             </div>
           </div>
 
@@ -78,7 +88,7 @@ const OfficeShowroomSection = () => {
                   Cellphone:
                 </p>
                 <p className="text-base sm:text-lg text-gray-900">
-                  +63 995 324 3922
+                  {settings?.['showroom.office.cellphone'] || '+63 995 324 3922'}
                 </p>
               </div>
             </div>
@@ -104,7 +114,7 @@ const OfficeShowroomSection = () => {
                   Telephone:
                 </p>
                 <p className="text-base sm:text-lg text-gray-900">
-                  (02) 8876-7285
+                  {settings?.['showroom.office.telephone'] || '(02) 8876-7285'}
                 </p>
               </div>
             </div>
@@ -114,19 +124,19 @@ const OfficeShowroomSection = () => {
           <div className="space-y-4 sm:space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-6 mb-8 sm:mb-10 md:mb-12">
             <div className="md:col-span-3">
               <img
-                src="/showroom-page/1.png"
-                alt="EcoHomeArt Showroom Exterior"
+                src={settings?.['showroom.office.image1'] || '/showroom-page/1.png'}
+                alt="Office & Showroom Exterior"
                 className="w-full h-64 sm:h-80 md:h-96 lg:h-[28rem] object-cover rounded-lg shadow-lg"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:col-span-3">
               <img
-                src="/showroom-page/2.png"
+                src={settings?.['showroom.office.image2'] || '/showroom-page/2.png'}
                 alt="Showroom Interior 1"
                 className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-lg shadow-lg"
               />
               <img
-                src="/showroom-page/3.png"
+                src={settings?.['showroom.office.image3'] || '/showroom-page/3.png'}
                 alt="Showroom Interior 2"
                 className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-lg shadow-lg"
               />
@@ -140,7 +150,7 @@ const OfficeShowroomSection = () => {
                 Office Hours
               </h3>
               <p className="text-sm sm:text-base text-gray-900">
-                Monday – Saturday, 10:00 AM – 5:00 PM
+                {settings?.['showroom.office.hours'] || 'Monday – Saturday, 10:00 AM – 5:00 PM'}
               </p>
             </div>
             <div>
@@ -148,10 +158,10 @@ const OfficeShowroomSection = () => {
                 Weekend Visits
               </h3>
               <p className="text-sm sm:text-base text-gray-900 mb-1">
-                By appointment only
+                {settings?.['showroom.office.weekend_visits'] || 'By appointment only'}
               </p>
               <p className="text-sm sm:text-base text-gray-900">
-                Contact: +63 995 324 3922
+                Contact: {settings?.['showroom.office.weekend_contact'] || '+63 995 324 3922'}
               </p>
             </div>
             <div>
@@ -159,7 +169,7 @@ const OfficeShowroomSection = () => {
                 Deliveries
               </h3>
               <p className="text-sm sm:text-base text-gray-900">
-                Monday – Saturday, 10:00 AM – 5:00 PM
+                {settings?.['showroom.office.deliveries'] || 'Monday – Saturday, 10:00 AM – 5:00 PM'}
               </p>
             </div>
           </div>

@@ -78,5 +78,187 @@ class CmsSettingsSeeder extends Seeder
                 $setting
             );
         }
+
+        // Showroom Settings
+        $showroomSettings = [
+            // Office & Showroom Section
+            [
+                'key' => 'showroom.office.title',
+                'value' => 'Office & Showroom',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Office Section Title',
+                'description' => 'Title for the office and showroom section'
+            ],
+            [
+                'key' => 'showroom.office.address',
+                'value' => '17 Valencia Street, Susana Heights Village, Tunasan, Muntinlupa City',
+                'type' => 'textarea',
+                'group' => 'showroom',
+                'label' => 'Office Address',
+                'description' => 'Office and showroom address'
+            ],
+            [
+                'key' => 'showroom.office.cellphone',
+                'value' => '+63 995 324 3922',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Office Cellphone',
+                'description' => 'Office cellphone number'
+            ],
+            [
+                'key' => 'showroom.office.telephone',
+                'value' => '(02) 8876-7285',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Office Telephone',
+                'description' => 'Office telephone number'
+            ],
+            [
+                'key' => 'showroom.office.hours',
+                'value' => 'Monday – Saturday, 10:00 AM – 5:00 PM',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Office Hours',
+                'description' => 'Office operating hours'
+            ],
+            [
+                'key' => 'showroom.office.weekend_visits',
+                'value' => 'By appointment only',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Weekend Visits',
+                'description' => 'Weekend visit information'
+            ],
+            [
+                'key' => 'showroom.office.weekend_contact',
+                'value' => '+63 995 324 3922',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Weekend Contact',
+                'description' => 'Contact number for weekend appointments'
+            ],
+            [
+                'key' => 'showroom.office.deliveries',
+                'value' => 'Monday – Saturday, 10:00 AM – 5:00 PM',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Deliveries Schedule',
+                'description' => 'Delivery schedule for office'
+            ],
+            [
+                'key' => 'showroom.office.image1',
+                'value' => '/uploads/s1.png',
+                'type' => 'image',
+                'group' => 'showroom',
+                'label' => 'Office Main Image',
+                'description' => 'Main showroom exterior image (large)'
+            ],
+            [
+                'key' => 'showroom.office.image2',
+                'value' => '/uploads/s2.png',
+                'type' => 'image',
+                'group' => 'showroom',
+                'label' => 'Office Interior Image 1',
+                'description' => 'First interior showroom image'
+            ],
+            [
+                'key' => 'showroom.office.image3',
+                'value' => '/uploads/s3.png',
+                'type' => 'image',
+                'group' => 'showroom',
+                'label' => 'Office Interior Image 2',
+                'description' => 'Second interior showroom image'
+            ],
+            
+            // Workshop Section
+            [
+                'key' => 'showroom.workshop.title',
+                'value' => 'Workshop',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Workshop Section Title',
+                'description' => 'Title for the workshop section'
+            ],
+            [
+                'key' => 'showroom.workshop.address',
+                'value' => 'Lot 639, Narra Rd., Bayanbayanan, San Pedro, Laguna 4023',
+                'type' => 'textarea',
+                'group' => 'showroom',
+                'label' => 'Workshop Address',
+                'description' => 'Workshop location address'
+            ],
+            [
+                'key' => 'showroom.workshop.cellphone',
+                'value' => '+63 995 324 3922',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Workshop Cellphone',
+                'description' => 'Workshop cellphone number'
+            ],
+            [
+                'key' => 'showroom.workshop.telephone',
+                'value' => '(02) 8876-7285',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Workshop Telephone',
+                'description' => 'Workshop telephone number'
+            ],
+            [
+                'key' => 'showroom.workshop.hours',
+                'value' => 'Monday – Saturday, 10:00 AM – 5:00 PM',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Workshop Hours',
+                'description' => 'Workshop operating hours'
+            ],
+            [
+                'key' => 'showroom.workshop.weekend_visits',
+                'value' => 'By appointment only',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Workshop Weekend Visits',
+                'description' => 'Weekend visit information for workshop'
+            ],
+            [
+                'key' => 'showroom.workshop.weekend_contact',
+                'value' => '+63 995 324 3922',
+                'type' => 'phone',
+                'group' => 'showroom',
+                'label' => 'Workshop Weekend Contact',
+                'description' => 'Contact number for workshop weekend appointments'
+            ],
+            [
+                'key' => 'showroom.workshop.deliveries',
+                'value' => 'Monday – Saturday, 10:00 AM – 5:00 PM',
+                'type' => 'text',
+                'group' => 'showroom',
+                'label' => 'Workshop Deliveries Schedule',
+                'description' => 'Delivery schedule for workshop'
+            ],
+            [
+                'key' => 'showroom.workshop.image1',
+                'value' => '/uploads/w1.png',
+                'type' => 'image',
+                'group' => 'showroom',
+                'label' => 'Workshop Image 1',
+                'description' => 'First workshop image'
+            ],
+            [
+                'key' => 'showroom.workshop.image2',
+                'value' => '/uploads/w2.png',
+                'type' => 'image',
+                'group' => 'showroom',
+                'label' => 'Workshop Image 2',
+                'description' => 'Second workshop image'
+            ],
+        ];
+
+        foreach ($showroomSettings as $setting) {
+            CmsSetting::updateOrCreate(
+                ['key' => $setting['key']],
+                $setting
+            );
+        }
     }
 }

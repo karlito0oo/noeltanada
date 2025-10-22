@@ -17,6 +17,8 @@ const CmsPage = () => {
   const [formData, setFormData] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [expandedGroups, setExpandedGroups] = useState({});
+  const [uploadingImages, setUploadingImages] = useState({});
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -75,6 +77,51 @@ const CmsPage = () => {
     setFormData((prev) => ({
       ...prev,
       [key]: value,
+    }));
+  };
+
+  const handleImageUpload = async (key, file) => {
+    if (!file) return;
+
+    // Create FormData for file upload
+    const uploadFormData = new FormData();
+    uploadFormData.append('image', file);
+
+    setUploadingImages(prev => ({ ...prev, [key]: true }));
+
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch('http://localhost:8000/api/admin/upload-image', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: uploadFormData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Update form data with the uploaded image path
+        handleInputChange(key, data.path);
+        setSuccessMessage(`Image uploaded successfully!`);
+        setTimeout(() => setSuccessMessage(''), 3000);
+      } else {
+        throw new Error(data.message || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setErrorMessage(error.message || 'Failed to upload image');
+      setTimeout(() => setErrorMessage(''), 5000);
+    } finally {
+      setUploadingImages(prev => ({ ...prev, [key]: false }));
+    }
+  };
+
+  const toggleGroup = (groupName) => {
+    setExpandedGroups(prev => ({
+      ...prev,
+      [groupName]: !prev[groupName]
     }));
   };
 
@@ -170,6 +217,71 @@ const CmsPage = () => {
           />
         );
 
+      case "image":
+        const getImageUrl = (path) => {
+          if (!path) return '';
+          // If it's already a full URL, use it as-is
+          if (path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
+          }
+          // If it's a relative path, prepend the backend URL
+          return `http://localhost:8000${path}`;
+        };
+
+        return (
+          <div className="space-y-2">
+            <input
+              type="text"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              value={currentValue}
+              onChange={(e) => handleInputChange(key, e.target.value)}
+              placeholder="/path/to/image.jpg or full URL"
+            />
+            <div className="flex items-center gap-2">
+              <label className="flex-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleImageUpload(key, e.target.files[0])}
+                  disabled={uploadingImages[key]}
+                />
+                <button
+                  type="button"
+                  onClick={(e) => e.currentTarget.previousElementSibling.click()}
+                  disabled={uploadingImages[key]}
+                  className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                >
+                  {uploadingImages[key] ? 'Uploading...' : 'Upload Image'}
+                </button>
+              </label>
+            </div>
+            {currentValue && (
+              <div className="mt-2 p-2 bg-gray-50 rounded-md">
+                <p className="text-xs text-gray-500 mb-2">Preview:</p>
+                <img
+                  src={getImageUrl(currentValue)}
+                  alt="Preview"
+                  className="max-w-xs max-h-40 rounded-md border border-gray-300 object-contain"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextElementSibling.style.display = 'block';
+                  }}
+                  onLoad={(e) => {
+                    e.target.style.display = 'block';
+                    if (e.target.nextElementSibling) {
+                      e.target.nextElementSibling.style.display = 'none';
+                    }
+                  }}
+                />
+                <p className="text-xs text-red-500 mt-2" style={{ display: 'none' }}>
+                  Failed to load image. Please check the path.
+                </p>
+              </div>
+            )}
+          </div>
+        );
+
       default:
         return (
           <input
@@ -258,27 +370,47 @@ const CmsPage = () => {
               key={groupName}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
-              <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+              <div 
+                className="px-6 py-4 bg-gray-50 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors flex justify-between items-center"
+                onClick={() => toggleGroup(groupName)}
+              >
                 <h2 className="text-xl font-semibold text-gray-900 capitalize">
                   {groupName} Settings
                 </h2>
+                <svg
+                  className={`w-6 h-6 text-gray-600 transform transition-transform ${
+                    expandedGroups[groupName] ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
               </div>
 
-              <div className="p-6 space-y-6">
-                {groupedSettings[groupName].map((setting) => (
-                  <div key={setting.key} className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
-                      {setting.label}
-                    </label>
-                    {setting.description && (
-                      <p className="text-xs text-gray-500">
-                        {setting.description}
-                      </p>
-                    )}
-                    {renderFormField(setting)}
-                  </div>
-                ))}
-              </div>
+              {expandedGroups[groupName] && (
+                <div className="p-6 space-y-6">
+                  {groupedSettings[groupName].map((setting) => (
+                    <div key={setting.key} className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-700">
+                        {setting.label}
+                      </label>
+                      {setting.description && (
+                        <p className="text-xs text-gray-500">
+                          {setting.description}
+                        </p>
+                      )}
+                      {renderFormField(setting)}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
 

@@ -1,12 +1,26 @@
 import React from "react";
+import { useCms } from "../../../contexts/CmsContext";
 
-const WorkshopSection = () => (
+const WorkshopSection = () => {
+  const { settings, isLoading } = useCms();
+
+  if (isLoading) {
+    return (
+      <section className="bg-white py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
   <section className="bg-white py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-6 sm:mb-8 md:mb-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 sm:mb-6 md:mb-8 text-gray-900 text-center sm:text-left">
-          Workshop
+          {settings?.['showroom.workshop.title'] || 'Workshop'}
         </h1>
       </div>
       {/* Location and Contact Info */}
@@ -38,7 +52,7 @@ const WorkshopSection = () => (
         </div>
         <div className="flex-1 text-center sm:text-left">
           <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-gray-900 mb-2 leading-tight">
-            Lot 639, Narra Rd., Bayanbayanan, San Pedro, Laguna 4023
+            {settings?.['showroom.workshop.address'] || 'Lot 639, Narra Rd., Bayanbayanan, San Pedro, Laguna 4023'}
           </h2>
         </div>
       </div>
@@ -70,7 +84,7 @@ const WorkshopSection = () => (
               Cellphone:
             </p>
             <p className="text-base sm:text-lg text-gray-900">
-              +63 995 324 3922
+              {settings?.['showroom.workshop.cellphone'] || '+63 995 324 3922'}
             </p>
           </div>
         </div>
@@ -95,19 +109,21 @@ const WorkshopSection = () => (
             <p className="text-base sm:text-lg font-semibold text-gray-900">
               Telephone:
             </p>
-            <p className="text-base sm:text-lg text-gray-900">(02) 8876-7285</p>
+            <p className="text-base sm:text-lg text-gray-900">
+              {settings?.['showroom.workshop.telephone'] || '(02) 8876-7285'}
+            </p>
           </div>
         </div>
       </div>
       {/* Workshop Images */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
         <img
-          src="/showroom-page/4.png"
+          src={settings?.['showroom.workshop.image1'] || '/showroom-page/4.png'}
           alt="Workshop 1"
           className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-lg"
         />
         <img
-          src="/showroom-page/5.png"
+          src={settings?.['showroom.workshop.image2'] || '/showroom-page/5.png'}
           alt="Workshop 2"
           className="w-full h-48 sm:h-56 md:h-64 lg:h-80 object-cover rounded-lg shadow-lg"
         />
@@ -116,22 +132,31 @@ const WorkshopSection = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">Office Hours</h3>
-          <p className="text-gray-900">Monday – Saturday, 10:00 AM – 5:00 PM</p>
+          <p className="text-gray-900">
+            {settings?.['showroom.workshop.hours'] || 'Monday – Saturday, 10:00 AM – 5:00 PM'}
+          </p>
         </div>
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
             Weekend Visits
           </h3>
-          <p className="text-gray-900 mb-1">By appointment only</p>
-          <p className="text-gray-900">Contact: +63 995 324 3922</p>
+          <p className="text-gray-900 mb-1">
+            {settings?.['showroom.workshop.weekend_visits'] || 'By appointment only'}
+          </p>
+          <p className="text-gray-900">
+            Contact: {settings?.['showroom.workshop.weekend_contact'] || '+63 995 324 3922'}
+          </p>
         </div>
         <div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">Deliveries</h3>
-          <p className="text-gray-900">Monday – Saturday, 10:00 AM – 5:00 PM</p>
+          <p className="text-gray-900">
+            {settings?.['showroom.workshop.deliveries'] || 'Monday – Saturday, 10:00 AM – 5:00 PM'}
+          </p>
         </div>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default WorkshopSection;

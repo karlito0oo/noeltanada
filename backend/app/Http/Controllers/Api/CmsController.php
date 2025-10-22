@@ -21,9 +21,18 @@ class CmsController extends Controller
                 ->orderBy('key')
                 ->get();
 
+            // Add base_url to all image type values
+            $baseUrl = rtrim(config('app.url') ?? url('/'), '/');
+            $settings->transform(function ($item) use ($baseUrl) {
+                if ($item->type === 'image' && $item->value && !preg_match('/^https?:\/\//', $item->value)) {
+                    $item->value = $baseUrl . $item->value;
+                }
+                return $item;
+            });
+
             // Group settings by their group
             $groupedSettings = $settings->groupBy('group');
-            
+
             // Also provide a flat key-value structure for easy access
             $flatSettings = $settings->pluck('value', 'key');
 
@@ -53,6 +62,15 @@ class CmsController extends Controller
             $settings = CmsSetting::where('group', $group)
                 ->where('is_active', true)
                 ->get();
+
+            // Add base_url to all image type values
+            $baseUrl = rtrim(config('app.url') ?? url('/'), '/');
+            $settings->transform(function ($item) use ($baseUrl) {
+                if ($item->type === 'image' && $item->value && !preg_match('/^https?:\/\//', $item->value)) {
+                    $item->value = $baseUrl . $item->value;
+                }
+                return $item;
+            });
 
             return response()->json([
                 'success' => true,

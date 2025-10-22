@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Api\CmsController;
+use App\Http\Controllers\Api\ImageUploadController;
 
 // Public routes
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -40,6 +41,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/products/{product}', [ProductController::class, 'show']);
         Route::put('/products/{product}', [ProductController::class, 'update']);
         Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+        
+        // Image upload route
+        Route::post('/upload-image', [ImageUploadController::class, 'upload']);
         
         // CMS management routes
         Route::get('/cms/settings', [CmsController::class, 'index']);
