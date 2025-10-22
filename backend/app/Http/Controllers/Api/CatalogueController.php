@@ -81,7 +81,16 @@ class CatalogueController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
+            // Support both JSON and FormData payloads
+            $data = $request->all();
+            // If image_url is a file upload, store it and set the path
+            if ($request->hasFile('image_url')) {
+                $file = $request->file('image_url');
+                $path = $file->store('uploads', 'public');
+                $data['image_url'] = '/uploads/' . basename($path);
+            }
+
+            $validator = Validator::make($data, [
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'image_url' => 'required|string',
@@ -98,7 +107,18 @@ class CatalogueController extends Controller
                 ], 422);
             }
 
-            $catalogue = Catalogue::create($request->all());
+            // Adjust order of other items if needed
+            if (isset($data['order']) && is_numeric($data['order'])) {
+                Catalogue::where('order', '>=', $data['order'])->increment('order');
+            }
+            $catalogue = Catalogue::create($data);
+
+            // Re-sequence all orders to be unique and sequential
+            $all = Catalogue::orderBy('order')->get();
+            foreach ($all as $idx => $item) {
+                $item->order = $idx + 1;
+                $item->save();
+            }
 
             return response()->json([
                 'success' => true,
@@ -122,7 +142,16 @@ class CatalogueController extends Controller
         try {
             $catalogue = Catalogue::findOrFail($id);
 
-            $validator = Validator::make($request->all(), [
+            $data = $request->all();
+            \Log::info('Catalogue update payload:', $data); // Debug log
+            // If image_url is a file upload, store it and set the path
+            if ($request->hasFile('image_url')) {
+                $file = $request->file('image_url');
+                $path = $file->store('uploads', 'public');
+                $data['image_url'] = '/uploads/' . basename($path);
+            }
+
+            $validator = Validator::make($data, [
                 'title' => 'sometimes|required|string|max:255',
                 'description' => 'nullable|string',
                 'image_url' => 'sometimes|required|string',
@@ -139,7 +168,29 @@ class CatalogueController extends Controller
                 ], 422);
             }
 
-            $catalogue->update($request->all());
+            // Adjust order of other items if needed
+            if (isset($data['order']) && is_numeric($data['order']) && $data['order'] != $catalogue->order) {
+                if ($data['order'] < $catalogue->order) {
+                    // Moving up: increment orders between new and old
+                    Catalogue::where('order', '>=', $data['order'])
+                        ->where('order', '<', $catalogue->order)
+                        ->increment('order');
+                } else {
+                    // Moving down: decrement orders between old and new
+                    Catalogue::where('order', '<=', $data['order'])
+                        ->where('order', '>', $catalogue->order)
+                        ->decrement('order');
+                }
+            }
+            $catalogue->update($data);
+            $catalogue->save();
+
+            // Re-sequence all orders to be unique and sequential
+            $all = Catalogue::orderBy('order')->get();
+            foreach ($all as $idx => $item) {
+                $item->order = $idx + 1;
+                $item->save();
+            }
 
             return response()->json([
                 'success' => true,
