@@ -288,6 +288,33 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Navigation Buttons */}
+        <div className="bg-white shadow rounded-lg mb-6">
+          <div className="px-6 py-4">
+            <div className="flex flex-wrap gap-4">
+              <button
+                onClick={() => navigate("/admin/cms")}
+                className="bg-green-600 hover:bg-green-700 text-black px-6 py-3 rounded-md text-sm font-medium flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"
+                  />
+                </svg>
+                CMS Management
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Products Table */}
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
@@ -596,11 +623,16 @@ const AdminDashboard = () => {
                   <div>
                     <label className="flex items-center">
                       <input
-                          type="checkbox"
-                          name="is_featured"
-                          checked={!!formData.is_featured}
-                          onChange={(e) => setFormData(prev => ({ ...prev, is_featured: e.target.checked ? 1 : 0 }))}
-                          className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        type="checkbox"
+                        name="is_featured"
+                        checked={!!formData.is_featured}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            is_featured: e.target.checked ? 1 : 0,
+                          }))
+                        }
+                        className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                       />
                       <span className="ml-2 text-sm font-medium text-gray-700">
                         Featured Product
