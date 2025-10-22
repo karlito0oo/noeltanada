@@ -14,6 +14,7 @@ import ProductView from "./pages/ProductView/ProductView";
 import Login from "./pages/Login/Login";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import CmsPage from "./pages/Admin/CmsPage";
+import CatalogueManagementPage from "./pages/Admin/CatalogueManagementPage";
 
 // Loading component for global CMS loading state
 const AppLoadingWrapper = ({ children }) => {
@@ -55,6 +56,7 @@ function App() {
               <Route path="/admin/login" element={<Login />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/cms" element={<CmsPage />} />
+              <Route path="/admin/catalogues" element={<CatalogueManagementPage />} />
             </Routes>
           </AppLoadingWrapper>
         </Router>

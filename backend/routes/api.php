@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Api\CmsController;
 use App\Http\Controllers\Api\ImageUploadController;
+use App\Http\Controllers\Api\CatalogueController;
 
 // Public routes
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -20,6 +21,10 @@ Route::get('/products/featured', [ProductController::class, 'featured']);
 // CMS routes (public - for frontend display)
 Route::get('/cms/settings', [CmsController::class, 'index']);
 Route::get('/cms/settings/group/{group}', [CmsController::class, 'getByGroup']);
+
+// Catalogue routes (public - for frontend display)
+Route::get('/catalogues', [CatalogueController::class, 'index']);
+Route::get('/catalogues/{id}', [CatalogueController::class, 'show']);
 
 // Email routes (public)
 Route::post('/contact', [EmailController::class, 'sendContactEmail']);
@@ -51,6 +56,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/cms/settings/{key}', [CmsController::class, 'update']);
         Route::post('/cms/settings/bulk-update', [CmsController::class, 'updateMultiple']);
         Route::get('/cms/settings/group/{group}', [CmsController::class, 'getByGroup']);
+
+        // Catalogue management routes
+        Route::get('/catalogues', [CatalogueController::class, 'index']);
+        Route::post('/catalogues', [CatalogueController::class, 'store']);
+        Route::get('/catalogues/{id}', [CatalogueController::class, 'show']);
+        Route::put('/catalogues/{id}', [CatalogueController::class, 'update']);
+        Route::delete('/catalogues/{id}', [CatalogueController::class, 'destroy']);
     });
     
     // Product management endpoints (keeping existing for compatibility)

@@ -260,5 +260,32 @@ class CmsSettingsSeeder extends Seeder
                 $setting
             );
         }
+
+        // Catalogue Page Settings
+        $catalogueSettings = [
+            [
+                'key' => 'catalogue.hero_image',
+                'value' => '/uploads/catalouge1.png',
+                'type' => 'image',
+                'group' => 'catalogue',
+                'label' => 'Catalogue Hero Image',
+                'description' => 'Main hero/banner image for catalogue page'
+            ],
+            [
+                'key' => 'catalogue.secondary_image',
+                'value' => '/uploads/catalouge2.png',
+                'type' => 'image',
+                'group' => 'catalogue',
+                'label' => 'Catalogue Secondary Image',
+                'description' => 'Secondary/featured image for catalogue page'
+            ],
+        ];
+
+        foreach ($catalogueSettings as $setting) {
+            CmsSetting::updateOrCreate(
+                ['key' => $setting['key']],
+                $setting
+            );
+        }
     }
 }
