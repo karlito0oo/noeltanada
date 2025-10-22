@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import apiService from "../../../services/ApiService.js";
+import { useCms } from "../../../contexts/CmsContext.jsx";
 
 const ContactFormSection = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const ContactFormSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  const { settings, isLoading } = useCms();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,13 +66,17 @@ const ContactFormSection = () => {
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
               Phone Number
             </h3>
-            <p className="text-lg text-gray-900">+63 995 324 3922</p>
+            <p className="text-lg text-gray-900">
+              {settings?.["footer.phone"]}
+            </p>
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
               Email Address
             </h3>
-            <p className="text-lg text-gray-900">info.noeltanada.com</p>
+            <p className="text-lg text-gray-900">
+              {settings?.["footer.email"]}
+            </p>
           </div>
         </div>
 
